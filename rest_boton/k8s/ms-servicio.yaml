@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicio-deployment-boton
+  namespace: proyecto-semillero
+spec:
+  selector:
+    matchLabels:
+      app: servicio
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: servicio
+    spec:
+      containers:
+        - name: semillero
+          image: semilleros-boton:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: servicio-clusterip-boton
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: servicio
