@@ -4,35 +4,25 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-
          stage('Build') {
           when {
-                branch '*'
+                branch ''
             }
             steps {
                 sh 'java -version'
-                sh 'npm run build:dev'
-                sh 'make' 
-                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true 
+                sh './gradlew build'
+                sh 'java -jar ./build/libs/rest-1.0.jar'
             }
         }
-        stage('Test'){
-        when {
-                branch 'master'
-            }
+        stage('Test-sonar'){
             steps {
-                sh 'make check || true'
+                sh 'make check'
                 junit 'reports/**/*.xml'
             }
     }
          stage('Test-veracode'){
-        when {
-                branch 'Master'
-                branch 'Develop'
-                branch 'Release'
-            }
             steps {
-               sh 'make check'
+                sh 'make check'
                 junit 'reports/**/*.xml'
             }
      }
@@ -44,7 +34,7 @@ pipeline {
          }
          stage('public-toDockerhub') {
          when {
-             branch 'Develop'
+             branch 'dev'
              }
              steps {
          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: jenkins_registry_cred_id, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
@@ -54,11 +44,11 @@ pipeline {
          }
      stage('Deploy-qa') {
          when {
-             branch 'Master'
+             branch 'qa'
              }
              steps {
-             sh 'make publish'
-             
+             sh 'echo publish'
+             sh 'kubeclt apply -f ingress.yaml'
          }
      }
      }
