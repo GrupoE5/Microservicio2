@@ -7,6 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'java -version'
+                 sh 'npm run build:dev'
                 sh 'java -jar ./build/libs/rest-1.0.jar'
             }
         }
