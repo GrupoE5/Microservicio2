@@ -7,7 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'java -version'
-                sh 'java -jar ./build/libs/rest-1.0.jar'
+                sh 'java -jar /build/libs/rest-1.0.jar'
             }
         }
         stage('Test-sonar'){
