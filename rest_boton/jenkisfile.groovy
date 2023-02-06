@@ -7,6 +7,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'java -version'
+                sh 'rest_boton/gradlew build'
                 sh 'java -jar rest_boton/build/libs/rest-1.0.jar'
             }
         }
