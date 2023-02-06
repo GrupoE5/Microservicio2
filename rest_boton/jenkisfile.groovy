@@ -5,6 +5,9 @@ pipeline {
     }
     stages {
          stage('Build') {
+             when {
+                branch 'Master'
+            }
             steps {
                 sh 'java -version'
                 sh './gradlew build'
