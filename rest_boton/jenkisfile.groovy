@@ -4,10 +4,7 @@ pipeline {
        skipStagesAfterUnstable()
     }
     stages {
-         stage('Build') {
-             when {
-                branch 'Master'
-            }
+        stage('Build') {
             steps {
                 sh 'java -version'
                 sh './gradlew build'
