@@ -6,7 +6,7 @@ pipeline {
     stages {
          stage('Build') {
              when {
-                branch 'Master'
+                branch '*'
             }
             steps {
                 sh 'java -version'
@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test-sonar'){
             when {
-                branch 'Master'
+                branch '*'
             }
             steps {
                 sh 'make check'
