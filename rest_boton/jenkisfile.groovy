@@ -1,7 +1,7 @@
 pipeline {
   agent any
     tools {
-      gradle 'Gradle 7.5.1'
+      gradle 'GRADLE_LATEST'
       //dockerTool 'Docker 20.10.21'
     }
   stages {
